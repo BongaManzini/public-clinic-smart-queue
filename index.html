@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Clinic Smart Queue & USSD Triage System | SA Informatics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-teal-500/20 selection:text-teal-400">
+
+  <!-- Ambient lighting -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute -top-32 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[140px]"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-[150px]"></div>
+    <div class="absolute -bottom-40 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-[140px]"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8">
+    <!-- Header -->
+    <header class="border-b border-slate-800 pb-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/30 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+            Public Healthcare Process Re-Engineering
+          </span>
+          <span class="text-xs font-mono text-slate-400 hidden sm:inline">SA Informatics Master Portfolio</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
+          <span>🏥 Public Clinic Smart Queue & Triage</span>
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base mt-1 max-w-2xl font-light">
+          Virtual ticketing and USSD gateway reducing 6+ hour physical clinic waiting queues to scheduled arrival windows, eliminating pre-dawn queue overcrowding and cross-infection hazards.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/BongaManzini/public-clinic-smart-queue" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 text-xs font-mono flex items-center gap-2 transition-all">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="../" class="px-3 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold font-mono flex items-center gap-1.5 transition-all">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Portfolio</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Clinic Live Analytics Bar -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-8">
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+        <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Traditional Wait Time</span>
+        <span class="text-3xl font-black text-rose-400 font-mono">6h 15m</span>
+        <span class="text-[11px] text-slate-500 block mt-0.5">Physical queue arrival 04:30 AM</span>
+      </div>
+
+      <div class="bg-slate-900/60 border border-teal-500/30 rounded-2xl p-4">
+        <span class="text-[11px] font-mono uppercase text-teal-400 font-semibold block mb-1">Smart Queue Avg Wait</span>
+        <span class="text-3xl font-black text-teal-400 font-mono">38 min</span>
+        <span class="text-[11px] text-teal-300 block mt-0.5">90% reduction via slots</span>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+        <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Active Patients in Queue</span>
+        <span id="active-queue-count" class="text-3xl font-black text-white font-mono">14</span>
+        <span class="text-[11px] text-slate-400 block mt-0.5">Dispatched across 4 streams</span>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+        <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Now Calling Ticket</span>
+        <span id="now-calling-ticket" class="text-3xl font-black text-amber-400 font-mono">T-108</span>
+        <span class="text-[11px] text-slate-400 block mt-0.5">Room 4: Consultation</span>
+      </div>
+    </div>
+
+    <!-- Main Grid: Patient Check-In & Clinic Nurse HUD -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- Left: Patient Self Check-in & USSD Simulator (7 cols) -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- Virtual Ticket Generator Card -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-xl">
+          <div class="flex items-center gap-2 mb-2">
+            <i data-lucide="ticket" class="w-5 h-5 text-teal-400"></i>
+            <h3 class="text-lg font-bold text-white">Join Clinic Queue (Virtual Check-In)</h3>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-6">
+            Select your clinical service stream to generate your queue token and estimated arrival window.
+          </p>
+
+          <form id="ticket-form" onsubmit="generateTicket(event)" class="space-y-4">
+            <div>
+              <label class="text-xs font-mono text-slate-300 uppercase block mb-1.5 font-semibold">
+                Patient Name or File Number
+              </label>
+              <input 
+                type="text" 
+                id="patient-name" 
+                placeholder="e.g. Nandi Khumalo or File #4928" 
+                required 
+                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
+              >
+            </div>
+
+            <div>
+              <label class="text-xs font-mono text-slate-300 uppercase block mb-1.5 font-semibold">
+                Healthcare Service Stream
+              </label>
+              <select 
+                id="service-stream" 
+                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-teal-500"
+              >
+                <option value="CHRONIC">💊 Fast-Track Chronic Medication Collection (PUP / CCMDD)</option>
+                <option value="GENERAL">🩺 General Outpatient Doctor / Nurse Consultation</option>
+                <option value="PEDIATRIC">👶 Child Health, Immunization & Weighing</option>
+                <option value="MATERNITY">🤰 Antenatal & Maternity Care</option>
+                <option value="TRIAGE_URGENT">🚨 Acute Emergency / High Priority Triage</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs font-mono text-slate-300 uppercase block mb-1.5 font-semibold">
+                Mobile Number (for SMS Call-Forward Alert)
+              </label>
+              <input 
+                type="tel" 
+                id="patient-phone" 
+                placeholder="e.g. 082 123 4567" 
+                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
+              >
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm font-mono flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 transition-all mt-2"
+            >
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              <span>Generate Virtual Queue Ticket</span>
+            </button>
+          </form>
+
+          <!-- Generated Ticket Pass (hidden by default) -->
+          <div id="ticket-pass" class="hidden mt-6 p-5 rounded-2xl bg-teal-950/30 border border-teal-500/40 animate-in fade-in">
+            <div class="flex items-center justify-between border-b border-teal-500/20 pb-3 mb-3">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-teal-400 font-bold block">Your Ticket Token</span>
+                <span id="ticket-number" class="text-3xl font-black font-mono text-white">T-115</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] font-mono uppercase text-slate-400 block">Estimated Consultation</span>
+                <span id="ticket-eta" class="text-sm font-mono font-bold text-teal-300">In ~35 mins (15:50)</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-mono mb-4">
+              <div>
+                <span class="text-slate-500 block text-[10px]">PATIENT:</span>
+                <span id="ticket-patient" class="text-slate-200 font-bold truncate block">Nandi Khumalo</span>
+              </div>
+              <div>
+                <span class="text-slate-500 block text-[10px]">STREAM:</span>
+                <span id="ticket-stream" class="text-slate-200 font-bold truncate block">Chronic Meds</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-slate-950 rounded-xl border border-teal-500/20 flex items-center gap-2 text-xs text-slate-300 font-light">
+              <i data-lucide="bell-ring" class="w-4 h-4 text-teal-400 shrink-0"></i>
+              <span>An automated SMS will alert you <strong>15 minutes before</strong> your number is called so you don't wait in the hall.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- USSD Feature Phone Simulator Panel -->
+        <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-cyan-400"></i>
+              <h4 class="text-sm font-bold text-white">USSD *120*2546# Simulator (No Data / 2G)</h4>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">Zero-Data Access</span>
+          </div>
+          <p class="text-xs text-slate-400 font-light mb-3">
+            In informal settlements, most patients lack mobile data. Our system provides a reverse-billed USSD menu enabling any basic feature phone to book a queue slot free of charge.
+          </p>
+
+          <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-xl p-3 font-mono text-xs text-emerald-300 space-y-1">
+            <p class="font-bold">ClinicQueue ZA:</p>
+            <p>1. Book Chronic Med Collection</p>
+            <p>2. Book Consultation</p>
+            <p>3. Check My Queue Position</p>
+            <p class="text-slate-400 text-[10px] pt-1">Reply with option (1-3) to receive instant SMS token.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Nurse & Triage Station Live Board (5 cols) -->
+      <div class="lg:col-span-5 space-y-6">
+
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <i data-lucide="stethoscope" class="w-4 h-4 text-teal-400"></i>
+              <h4 class="text-sm font-bold text-white">Clinic Nurse Call Station</h4>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Live Queue
+            </span>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 mb-5 text-center">
+            <span class="text-[11px] font-mono uppercase text-slate-500 block mb-1">Currently Consulting</span>
+            <span id="consulting-patient" class="text-2xl font-black text-teal-300 font-mono">T-108 • M. Sithole</span>
+            <span class="text-xs text-slate-400 block mt-1">Consultation Room 4 • Elapsed: 6m 20s</span>
+          </div>
+
+          <button 
+            onclick="callNextPatient()" 
+            class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-bold font-mono text-sm flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 transition-all mb-6"
+          >
+            <i data-lucide="megaphone" class="w-4 h-4"></i>
+            <span>Call Next Patient (Auto-SMS Alert)</span>
+          </button>
+
+          <!-- Up Next Queue Stream -->
+          <div class="space-y-2">
+            <span class="text-xs font-mono uppercase text-slate-400 font-semibold block mb-2">
+              Upcoming Queue Stream (Triaged)
+            </span>
+            <div id="queue-list" class="space-y-2 text-xs font-mono">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Systems Analysis Impact Box -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 text-xs text-slate-300 font-light space-y-3">
+          <h4 class="text-white font-bold text-sm flex items-center gap-1.5 font-mono">
+            <i data-lucide="activity" class="w-4 h-4 text-teal-400"></i>
+            <span>Informatics Impact Summary</span>
+          </h4>
+          <p class="leading-relaxed">
+            By separating chronic medication pickups (60% of clinic traffic) from doctor consultations and implementing asynchronous virtual queueing, clinic waiting rooms maintain manageable density, curbing airborne contagion (TB, Influenza, COVID) and preserving patient dignity.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono gap-4">
+      <p>© Bonga Manzini • BSc Informatics (UNISA) • Public Health Information Systems</p>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/BongaManzini/public-clinic-smart-queue" target="_blank" class="hover:text-teal-400 transition-colors">GitHub Repository</a>
+        <span>•</span>
+        <a href="https://bongamanzini.github.io/portfolio/" target="_blank" class="hover:text-teal-400 transition-colors">Portfolio</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Mock initial queue
+    let queue = [
+      { id: 'T-109', name: 'Zandile M.', stream: 'PEDIATRIC', label: 'Child Health', priority: 'NORMAL', waitMins: 8 },
+      { id: 'T-110', name: 'Kagiso N.', stream: 'CHRONIC', label: 'Chronic Meds', priority: 'FAST_TRACK', waitMins: 14 },
+      { id: 'T-111', name: 'Bheki M.', stream: 'GENERAL', label: 'General Consult', priority: 'NORMAL', waitMins: 22 },
+      { id: 'T-112', name: 'Sipho D.', stream: 'TRIAGE_URGENT', label: 'High Priority', priority: 'EMERGENCY', waitMins: 2 },
+      { id: 'T-113', name: 'Lerato K.', stream: 'MATERNITY', label: 'Antenatal Care', priority: 'NORMAL', waitMins: 30 }
+    ];
+
+    let ticketCounter = 114;
+
+    function renderQueue() {
+      // Sort emergency first, then by wait time
+      queue.sort((a, b) => {
+        if (a.priority === 'EMERGENCY' && b.priority !== 'EMERGENCY') return -1;
+        if (b.priority === 'EMERGENCY' && a.priority !== 'EMERGENCY') return 1;
+        return a.waitMins - b.waitMins;
+      });
+
+      document.getElementById('active-queue-count').textContent = queue.length;
+
+      const container = document.getElementById('queue-list');
+      container.innerHTML = queue.slice(0, 5).map(item => {
+        let tagClass = 'bg-slate-800 text-slate-300';
+        if (item.priority === 'EMERGENCY') tagClass = 'bg-rose-500/20 text-rose-300 border border-rose-500/30';
+        else if (item.priority === 'FAST_TRACK') tagClass = 'bg-teal-500/20 text-teal-300 border border-teal-500/30';
+
+        return `
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <span class="font-bold text-white">${item.id}</span>
+              <span class="text-slate-400 truncate max-w-[120px]">${item.name}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] ${tagClass}">${item.label}</span>
+              <span class="text-[10px] text-slate-500">~${item.waitMins}m</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function generateTicket(e) {
+      e.preventDefault();
+      const name = document.getElementById('patient-name').value.trim();
+      const stream = document.getElementById('service-stream').value;
+      const phone = document.getElementById('patient-phone').value.trim();
+
+      const newId = `T-${ticketCounter++}`;
+      let label = 'General Consult';
+      let priority = 'NORMAL';
+      let waitMins = 25;
+
+      if (stream === 'CHRONIC') {
+        label = 'Chronic Meds';
+        priority = 'FAST_TRACK';
+        waitMins = 12;
+      } else if (stream === 'PEDIATRIC') {
+        label = 'Child Health';
+        waitMins = 18;
+      } else if (stream === 'MATERNITY') {
+        label = 'Antenatal';
+        waitMins = 22;
+      } else if (stream === 'TRIAGE_URGENT') {
+        label = 'Emergency Triage';
+        priority = 'EMERGENCY';
+        waitMins = 3;
+      }
+
+      queue.push({ id: newId, name, stream, label, priority, waitMins });
+
+      // Update UI ticket pass
+      document.getElementById('ticket-number').textContent = newId;
+      document.getElementById('ticket-patient').textContent = name;
+      document.getElementById('ticket-stream').textContent = label;
+      document.getElementById('ticket-eta').textContent = `In ~${waitMins} mins`;
+      document.getElementById('ticket-pass').classList.remove('hidden');
+
+      renderQueue();
+    }
+
+    function callNextPatient() {
+      if (queue.length === 0) {
+        alert('All patients have been served!');
+        return;
+      }
+
+      const next = queue.shift();
+      document.getElementById('consulting-patient').textContent = `${next.id} • ${next.name}`;
+      document.getElementById('now-calling-ticket').textContent = next.id;
+      renderQueue();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQueue();
+    });
+  </script>
+</body>
+</html>
