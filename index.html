@@ -10,22 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif, sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-teal-500/20 selection:text-teal-400">
+<body class="bg-[#0a0a0a] text-slate-100 min-h-screen selection:bg-teal-500/20 selection:text-teal-400">
 
-  <!-- Ambient lighting -->
-  <div class="fixed inset-0 pointer-events-none z-0">
-    <div class="absolute -top-32 left-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[140px]"></div>
-    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-blue-500/10 rounded-full blur-[150px]"></div>
-    <div class="absolute -bottom-40 left-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-[140px]"></div>
-  </div>
+  
 
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8">
     <!-- Header -->
-    <header class="border-b border-slate-800 pb-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <header class="border-b border-[#262626] pb-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
         <div class="flex items-center gap-2 mb-2">
           <span class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/30 flex items-center gap-1.5">
@@ -35,7 +30,7 @@
           <span class="text-xs font-mono text-slate-400 hidden sm:inline">SA Informatics Master Portfolio</span>
         </div>
         <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white flex items-center gap-3">
-          <span> Public Clinic Smart Queue & Triage</span>
+          <span>Public Clinic Smart Queue & Triage</span>
         </h1>
         <p class="text-slate-400 text-sm sm:text-base mt-1 max-w-2xl font-light">
           Virtual ticketing and USSD gateway reducing 6+ hour physical clinic waiting queues to scheduled arrival windows, eliminating pre-dawn queue overcrowding and cross-infection hazards.
@@ -43,11 +38,11 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <a href="https://github.com/BongaManzini/public-clinic-smart-queue" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 text-xs font-mono flex items-center gap-2 transition-all">
+        <a href="https://github.com/BongaManzini/public-clinic-smart-queue" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-md bg-[#111111] border border-[#262626] text-slate-300 hover:text-white hover:border-[#333333] text-xs font-mono flex items-center gap-2 transition-all">
           <i data-lucide="github" class="w-4 h-4"></i>
           <span>GitHub</span>
         </a>
-        <a href="../" class="px-3 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold font-mono flex items-center gap-1.5 transition-all">
+        <a href="../" class="px-3 py-2 rounded-md bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold font-mono flex items-center gap-1.5 transition-all">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
           <span>Portfolio</span>
         </a>
@@ -56,25 +51,25 @@
 
     <!-- Clinic Live Analytics Bar -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-8">
-      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+      <div class="bg-[#111111] border border-[#262626] rounded-md p-4">
         <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Traditional Wait Time</span>
         <span class="text-3xl font-black text-rose-400 font-mono">6h 15m</span>
         <span class="text-[11px] text-slate-500 block mt-0.5">Physical queue arrival 04:30 AM</span>
       </div>
 
-      <div class="bg-slate-900/60 border border-teal-500/30 rounded-2xl p-4">
+      <div class="bg-[#111111] border border-teal-500/30 rounded-md p-4">
         <span class="text-[11px] font-mono uppercase text-teal-400 font-semibold block mb-1">Smart Queue Avg Wait</span>
         <span class="text-3xl font-black text-teal-400 font-mono">38 min</span>
         <span class="text-[11px] text-teal-300 block mt-0.5">90% reduction via slots</span>
       </div>
 
-      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+      <div class="bg-[#111111] border border-[#262626] rounded-md p-4">
         <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Active Patients in Queue</span>
         <span id="active-queue-count" class="text-3xl font-black text-white font-mono">14</span>
         <span class="text-[11px] text-slate-400 block mt-0.5">Dispatched across 4 streams</span>
       </div>
 
-      <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+      <div class="bg-[#111111] border border-[#262626] rounded-md p-4">
         <span class="text-[11px] font-mono uppercase text-slate-400 block mb-1">Now Calling Ticket</span>
         <span id="now-calling-ticket" class="text-3xl font-black text-amber-400 font-mono">T-108</span>
         <span class="text-[11px] text-slate-400 block mt-0.5">Room 4: Consultation</span>
@@ -88,7 +83,7 @@
       <div class="lg:col-span-7 space-y-6">
 
         <!-- Virtual Ticket Generator Card -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-xl">
+        <div class="bg-[#111111] border border-[#262626] rounded-md p-6 sm:p-7 ">
           <div class="flex items-center gap-2 mb-2">
             <i data-lucide="ticket" class="w-5 h-5 text-teal-400"></i>
             <h3 class="text-lg font-bold text-white">Join Clinic Queue (Virtual Check-In)</h3>
@@ -107,7 +102,7 @@
                 id="patient-name" 
                 placeholder="e.g. Nandi Khumalo or File #4928" 
                 required 
-                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
+                class="w-full bg-[#0a0a0a] border border-[#262626] rounded-md px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
               >
             </div>
 
@@ -117,7 +112,7 @@
               </label>
               <select 
                 id="service-stream" 
-                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-teal-500"
+                class="w-full bg-[#0a0a0a] border border-[#262626] rounded-md px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-teal-500"
               >
                 <option value="CHRONIC"> Fast-Track Chronic Medication Collection (PUP / CCMDD)</option>
                 <option value="GENERAL"> General Outpatient Doctor / Nurse Consultation</option>
@@ -135,13 +130,13 @@
                 type="tel" 
                 id="patient-phone" 
                 placeholder="e.g. 082 123 4567" 
-                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
+                class="w-full bg-[#0a0a0a] border border-[#262626] rounded-md px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500"
               >
             </div>
 
             <button 
               type="submit" 
-              class="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm font-mono flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 transition-all mt-2"
+              class="w-full py-3 rounded-md bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm font-mono flex items-center justify-center gap-2  shadow-teal-500/20 transition-all mt-2"
             >
               <i data-lucide="check-circle" class="w-4 h-4"></i>
               <span>Generate Virtual Queue Ticket</span>
@@ -149,7 +144,7 @@
           </form>
 
           <!-- Generated Ticket Pass (hidden by default) -->
-          <div id="ticket-pass" class="hidden mt-6 p-5 rounded-2xl bg-teal-950/30 border border-teal-500/40 animate-in fade-in">
+          <div id="ticket-pass" class="hidden mt-6 p-5 rounded-md bg-teal-950/30 border border-teal-500/40 animate-in fade-in">
             <div class="flex items-center justify-between border-b border-teal-500/20 pb-3 mb-3">
               <div>
                 <span class="text-[10px] font-mono uppercase text-teal-400 font-bold block">Your Ticket Token</span>
@@ -172,7 +167,7 @@
               </div>
             </div>
 
-            <div class="p-3 bg-slate-950 rounded-xl border border-teal-500/20 flex items-center gap-2 text-xs text-slate-300 font-light">
+            <div class="p-3 bg-[#0a0a0a] rounded-md border border-teal-500/20 flex items-center gap-2 text-xs text-slate-300 font-light">
               <i data-lucide="bell-ring" class="w-4 h-4 text-teal-400 shrink-0"></i>
               <span>An automated SMS will alert you <strong>15 minutes before</strong> your number is called so you don't wait in the hall.</span>
             </div>
@@ -180,19 +175,19 @@
         </div>
 
         <!-- USSD Feature Phone Simulator Panel -->
-        <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5">
+        <div class="bg-[#111111] border border-[#262626] rounded-md p-5">
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
               <i data-lucide="phone" class="w-4 h-4 text-cyan-400"></i>
               <h4 class="text-sm font-bold text-white">USSD *120*2546# Simulator (No Data / 2G)</h4>
             </div>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">Zero-Data Access</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#161616] text-slate-400">Zero-Data Access</span>
           </div>
           <p class="text-xs text-slate-400 font-light mb-3">
             In informal settlements, most patients lack mobile data. Our system provides a reverse-billed USSD menu enabling any basic feature phone to book a queue slot free of charge.
           </p>
 
-          <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-xl p-3 font-mono text-xs text-emerald-300 space-y-1">
+          <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-md p-3 font-mono text-xs text-emerald-300 space-y-1">
             <p class="font-bold">ClinicQueue ZA:</p>
             <p>1. Book Chronic Med Collection</p>
             <p>2. Book Consultation</p>
@@ -206,19 +201,19 @@
       <!-- Right: Nurse & Triage Station Live Board (5 cols) -->
       <div class="lg:col-span-5 space-y-6">
 
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+        <div class="bg-[#111111] border border-[#262626] rounded-md p-6 ">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
               <i data-lucide="stethoscope" class="w-4 h-4 text-teal-400"></i>
               <h4 class="text-sm font-bold text-white">Clinic Nurse Call Station</h4>
             </div>
-            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+            <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-[#262626] flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               Live Queue
             </span>
           </div>
 
-          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 mb-5 text-center">
+          <div class="p-4 rounded-md bg-[#0a0a0a] border border-[#262626] mb-5 text-center">
             <span class="text-[11px] font-mono uppercase text-slate-500 block mb-1">Currently Consulting</span>
             <span id="consulting-patient" class="text-2xl font-black text-teal-300 font-mono">T-108 • M. Sithole</span>
             <span class="text-xs text-slate-400 block mt-1">Consultation Room 4 • Elapsed: 6m 20s</span>
@@ -226,7 +221,7 @@
 
           <button 
             onclick="callNextPatient()" 
-            class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-bold font-mono text-sm flex items-center justify-center gap-2 shadow-lg shadow-teal-500/20 transition-all mb-6"
+            class="w-full py-3.5 rounded-md bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-950 font-bold font-mono text-sm flex items-center justify-center gap-2  shadow-teal-500/20 transition-all mb-6"
           >
             <i data-lucide="megaphone" class="w-4 h-4"></i>
             <span>Call Next Patient (Auto-SMS Alert)</span>
@@ -244,7 +239,7 @@
         </div>
 
         <!-- Systems Analysis Impact Box -->
-        <div class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 text-xs text-slate-300 font-light space-y-3">
+        <div class="bg-[#111111] border border-[#262626] rounded-md p-6 text-xs text-slate-300 font-light space-y-3">
           <h4 class="text-white font-bold text-sm flex items-center gap-1.5 font-mono">
             <i data-lucide="activity" class="w-4 h-4 text-teal-400"></i>
             <span>Informatics Impact Summary</span>
@@ -259,7 +254,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="mt-12 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono gap-4">
+    <footer class="mt-12 pt-6 border-t border-[#262626] flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono gap-4">
       <p>© Bonga Manzini • BSc Informatics (UNISA) • Public Health Information Systems</p>
       <div class="flex items-center gap-4">
         <a href="https://github.com/BongaManzini/public-clinic-smart-queue" target="_blank" class="hover:text-teal-400 transition-colors">GitHub Repository</a>
@@ -295,12 +290,12 @@
 
       const container = document.getElementById('queue-list');
       container.innerHTML = queue.slice(0, 5).map(item => {
-        let tagClass = 'bg-slate-800 text-slate-300';
-        if (item.priority === 'EMERGENCY') tagClass = 'bg-rose-500/20 text-rose-300 border border-rose-500/30';
+        let tagClass = 'bg-[#161616] text-slate-300';
+        if (item.priority === 'EMERGENCY') tagClass = 'bg-rose-500/20 text-rose-300 border border-[#262626]';
         else if (item.priority === 'FAST_TRACK') tagClass = 'bg-teal-500/20 text-teal-300 border border-teal-500/30';
 
         return `
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+          <div class="p-3 bg-[#0a0a0a] rounded-md border border-[#262626] flex items-center justify-between">
             <div class="flex items-center gap-2.5">
               <span class="font-bold text-white">${item.id}</span>
               <span class="text-slate-400 truncate max-w-[120px]">${item.name}</span>
