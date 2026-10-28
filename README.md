@@ -1,4 +1,4 @@
-# 🏥 Public Clinic Smart Queue & USSD Triage System
+# Public Clinic Smart Queue & USSD Triage System
 
 > **Live Application**: [https://bongamanzini.github.io/public-clinic-smart-queue/](https://bongamanzini.github.io/public-clinic-smart-queue/)
 
@@ -6,7 +6,7 @@ An interactive healthcare process re-engineering and virtual ticketing platform 
 
 ---
 
-## 🎯 The Informatics & Systems Analysis Angle
+## The Informatics & Systems Analysis Angle
 
 - **The Problem**: Patients across South African township and rural clinics arrive as early as 04:30 AM and wait 6 to 8 hours in congested waiting halls, exposing vulnerable infants and immunocompromised patients to airborne pathogens (TB, influenza).
 - **The Informatics Re-Engineering Solution**:
@@ -16,7 +16,7 @@ An interactive healthcare process re-engineering and virtual ticketing platform 
 
 ---
 
-## 🛠️ Features
+## ️ Features
 
 - **Patient Self Check-In**: Virtual ticket token generator allocating department-specific queue numbers.
 - **USSD Gateway Simulator**: Illustrates how non-smartphone users access the queue on basic feature phones.
@@ -25,7 +25,7 @@ An interactive healthcare process re-engineering and virtual ticketing platform 
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 - **Frontend**: HTML5, Vanilla JavaScript (ESNext)
 - **Styling**: Tailwind CSS
@@ -34,8 +34,8 @@ An interactive healthcare process re-engineering and virtual ticketing platform 
 
 ---
 
-## 👨‍💻 Author
+## ‍ Author
 
-**Bonga Manzini**  
-BSc Informatics – University of South Africa (UNISA)  
+**Bonga Manzini** 
+BSc Informatics – University of South Africa (UNISA) 
 Portfolio: [https://bongamanzini.github.io/portfolio/](https://bongamanzini.github.io/portfolio/)
